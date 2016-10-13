@@ -8,21 +8,6 @@ import (
 	"strings"
 )
 
-/*
-type Funcptr func(s string)
-type caseptr func(s string)
-type TCASE struct {
-	name string
-	h    caseptr
-}
-
-var cases = map[string]TCASE{}
-
-
-func RegisterCase(key string, tcase TCASE) {
-	cases[key] = tcase
-}
-*/
 var mcase string
 
 func init() {
