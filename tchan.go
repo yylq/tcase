@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sync"
 	"time"
 )
 
@@ -159,4 +160,33 @@ func (m MChan) Mulchan() {
 		id++
 	}
 	time.Sleep(5)
+}
+func (m MChan) Closechan() {
+	var str string
+	wc := make(chan string)
+	var wg sync.WaitGroup
+	wg.Add(1)
+	go func(a <-chan string) {
+		defer wg.Done()
+
+		for true {
+			val, isOK := <-a
+			fmt.Printf("childd  %s %v\n", val, isOK)
+			if !isOK {
+				break
+			}
+
+		}
+		fmt.Println("go func exit")
+	}(wc)
+
+	for i := 0; i < 5; i++ {
+		fmt.Scanln(&str)
+
+		wc <- str
+
+	}
+	close(wc)
+	wg.Wait()
+	fmt.Println("main exit")
 }
